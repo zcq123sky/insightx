@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "prinsight",
   "description": "A barebones Turborepo example for working with Task Graphs.",
   "private": true,
   "devDependencies": {
