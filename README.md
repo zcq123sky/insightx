@@ -1,2 +1,4 @@
 # InsightX
-- a analyzer whit AI.
+- A analyzer whit AI.
+## tech stack
+- bun
