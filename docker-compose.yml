@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15 # 用的镜像版本，可以根据需要换成 16 / 17 等
+    container_name: isx # 容器名字，方便用 docker ps 看见
+
+    environment:
+      POSTGRES_USER: dever # 数据库用户名
+      POSTGRES_PASSWORD: dev123 # 密码（一定要改）
+      POSTGRES_DB: isx_db # 默认创建的数据库名
+
+    ports:
+      - "5432:5432" # 宿主机 5432 → 容器 5432
+
+    volumes:
+      # 用“命名卷”来持久化数据，数据在 Docker 内部，不在当前目录
+      - pgdata:/var/lib/postgresql/data
+
+    restart: unless-stopped # 崩溃或重启后自动拉起（除非你手动 stop）
+
+    # 健康检查：每隔几秒检查一下数据库是不是 ready
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dever -d isx_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# 声明命名卷
+volumes:
+  pgdata:
