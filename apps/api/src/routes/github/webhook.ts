@@ -3,9 +3,7 @@ import { db, schema } from "@isx/db";
 import { GitHubClient } from "@isx/github-client";
 import { verifyWebhookSignature } from "@isx/github-core";
 import { Hono } from "hono";
-import { HTTPException } from "hono/http-exception";
 
-// 使用 Hono Factory 创建类型安全的路由
 const app = new Hono();
 
 // 关键修改：提取事件处理逻辑，完全脱离 Hono 上下文
@@ -45,7 +43,7 @@ app.post("/", async (c) => {
 
 	// 1. 验证签名
 	const secret = process.env.GITHUB_APP_WEBHOOK_SECRET!;
-	if (!verifyWebhookSignature(payload, signature, secret)) {
+	if (!(await verifyWebhookSignature(payload, signature, secret))) {
 		console.error("❌ Webhook 签名验证失败");
 		return c.json({ error: "Invalid signature" }, 401);
 	}
@@ -58,7 +56,7 @@ app.post("/", async (c) => {
 
 	// 3. 异步处理事件（使用 setImmediate 确保在主循环后执行）
 	setImmediate(() => {
-		processWebhookEvent(event, data).catch(console.error);
+		processWebhookEvent(event || "unknown", data).catch(console.error);
 	});
 
 	// 注意：这里必须 return c.json() 的结果
