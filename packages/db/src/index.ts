@@ -10,7 +10,7 @@ console.log("Dotenv module path:", require.resolve("dotenv"));
 // 创建数据库连接池（管理多个连接，更高效）
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL,
-	ssl: false,
+	ssl: { rejectUnauthorized: false },
 });
 
 // 创建 db 实例，它将知道我们的表结构（schema）
