@@ -1,5 +1,6 @@
 // packages/ai/src/services/pr-analyzer.service.ts
 import type { BaseAIProvider } from "../providers/base-provider";
+import { DeepSeekProvider } from "../providers/deepseek-provider";
 import { OllamaProvider } from "../providers/ollama-provider";
 import type { AnalyzePROutput, AnalyzePRParams } from "../types";
 
@@ -7,7 +8,19 @@ export class PRAnalyzerService {
 	private provider: BaseAIProvider;
 
 	constructor(provider?: BaseAIProvider) {
-		this.provider = provider || new OllamaProvider();
+		// 自动检测使用哪个 provider
+		if (provider) {
+			this.provider = provider;
+		} else if (process.env.DEEPSEEK_API_KEY) {
+			console.log("🔄 使用 DeepSeek AI");
+			this.provider = new DeepSeekProvider(process.env.DEEPSEEK_API_KEY);
+		} else if (process.env.OLLAMA_BASE_URL) {
+			console.log("🔄 使用 Ollama AI");
+			this.provider = new OllamaProvider(process.env.OLLAMA_BASE_URL);
+		} else {
+			console.log("🔄 使用默认 Ollama AI");
+			this.provider = new OllamaProvider();
+		}
 	}
 
 	async analyze(params: AnalyzePRParams): Promise<AnalyzePROutput> {
