@@ -1,0 +1,5 @@
+{
+	"buildCommand": "bun run build",
+	"outputDirectory": ".svelte-kit/output",
+	"installCommand": "bun install"
+}
