@@ -19,6 +19,8 @@ export const prStatusEnum = pgEnum("pr_status", [
 // 2. 定义 “Pull Requests” 表
 export const pullRequests = pgTable("pull_requests", {
 	id: serial("id").primaryKey(), // 自增主键，像Excel第一列序号
+	githubId: integer("github_id"), // GitHub PR ID
+	number: integer("number"), // PR 编号
 	url: varchar("url", { length: 512 }).unique().notNull(), // 唯一且不能为空的URL
 	title: varchar("title", { length: 255 }).notNull(),
 	description: text("description"), // 文本，可以为空

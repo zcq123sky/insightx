@@ -8,6 +8,13 @@
       "when": 1770204352032,
       "tag": "0000_easy_black_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772599845713,
+      "tag": "0001_white_colleen_wing",
+      "breakpoints": true
     }
   ]
 }

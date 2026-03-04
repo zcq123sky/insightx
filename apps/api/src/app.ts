@@ -2,8 +2,11 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
+import analyzeRoute from "./routes/analyze";
 import envDebugRoute from "./routes/debug/env";
 import githubWebhook from "./routes/github/webhook";
+import historyRoute from "./routes/history";
+import statsRoute from "./routes/stats";
 
 // 其他路由...
 
@@ -36,6 +39,9 @@ app.post("/", async (c) => {
 
 // 挂载路由
 app.route("/api/github/webhook", githubWebhook);
+app.route("/api/analyze", analyzeRoute);
+app.route("/api/history", historyRoute);
+app.route("/api/stats", statsRoute);
 
 app.route("/debug/env", envDebugRoute);
 

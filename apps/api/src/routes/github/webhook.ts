@@ -130,16 +130,29 @@ async function handlePullRequest(
 
 	// 4. 存储结果到数据库
 	try {
-		await db.insert(schema.pullRequests).values({
-			githubId: pull_request.id,
-			number: pull_request.number,
-			repository: repository.full_name,
-			title: pull_request.title,
-			author: pull_request.user.login,
-			status: "analyzed",
-			additions: prDetails.additions,
-			deletions: prDetails.deletions,
+		const prUrl = `https://github.com/${repository.full_name}/pull/${pull_request.number}`;
+
+		const [prRecord] = await db
+			.insert(schema.pullRequests)
+			.values({
+				githubId: pull_request.id,
+				number: pull_request.number,
+				url: prUrl,
+				repository: repository.full_name,
+				title: pull_request.title,
+				author: pull_request.user.login,
+				status: "analyzed",
+				additions: prDetails.additions,
+				deletions: prDetails.deletions,
+			})
+			.returning({ id: schema.pullRequests.id });
+
+		await db.insert(schema.analyses).values({
+			prId: prRecord.id,
+			summary: analysis.summary,
+			qualityScore: analysis.qualityScore,
 		});
+
 		console.log("💾 分析结果已保存到数据库");
 	} catch (dbError) {
 		console.warn("⚠️  保存到数据库失败:", dbError.message);

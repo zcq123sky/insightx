@@ -16,6 +16,8 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@isx/config-typescript": "workspace:*",
+    "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
     "pg": "^8.18.0"
   },

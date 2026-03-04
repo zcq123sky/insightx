@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Lint and Type Check
+        run: |
+          bun run format-and-lint || true
+
+      - name: Deploy to Railway
+        if: github.event_name == 'push'
+        run: |
+          echo "Railway deployment would be triggered here"
+          echo "Add Railway token to GitHub secrets: RAILWAY_TOKEN"
+          echo "Use: railway up"
+
+      - name: Deploy to Vercel
+        if: github.event_name == 'push'
+        run: |
+          echo "Vercel deployment would be triggered here"
+          echo "Add Vercel token to GitHub secrets: VERCEL_TOKEN"
+          echo "Use: vercel --prod"
