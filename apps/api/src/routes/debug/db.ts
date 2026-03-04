@@ -1,26 +1,22 @@
-import { db, schema } from "@isx/db";
+import { db } from "@isx/db";
 import { Hono } from "hono";
 
 const app = new Hono();
 
 app.get("/", async (c) => {
 	try {
-		const result = await db.select().from(schema.pullRequests).limit(1);
+		// 直接执行原始 SQL 查询
+		const result = await db.execute(
+			`SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`,
+		);
 		return c.json({
-			status: "ok",
-			message: "Database connected",
-			tableExists: true,
-			sample: result,
+			tables: result,
+			databaseUrl: process.env.DATABASE_URL
+				? process.env.DATABASE_URL.replace(/:[^:@]+@/, ":****@")
+				: "not set",
 		});
 	} catch (error: any) {
-		return c.json(
-			{
-				status: "error",
-				message: error.message,
-				tableExists: false,
-			},
-			500,
-		);
+		return c.json({ error: error.message }, 500);
 	}
 });
 
