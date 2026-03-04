@@ -1,4 +1,4 @@
 # InsightX
 - A analyzer whit AI.
 ## tech stack
-- bun
+- bun sveltekit tuborepo typescript drizzle postgres
