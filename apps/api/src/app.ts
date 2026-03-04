@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
 import analyzeRoute from "./routes/analyze";
+import dbDebugRoute from "./routes/debug/db";
 import envDebugRoute from "./routes/debug/env";
 import githubWebhook from "./routes/github/webhook";
 import historyRoute from "./routes/history";
@@ -44,6 +45,7 @@ app.route("/api/history", historyRoute);
 app.route("/api/stats", statsRoute);
 
 app.route("/debug/env", envDebugRoute);
+app.route("/debug/db", dbDebugRoute);
 
 // app.route('/api/health', healthRoute);
 
