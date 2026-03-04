@@ -19,6 +19,7 @@
 	},
 	"devDependencies": {
 		"@isx/config-typescript": "workspace:*",
+		"@types/pg": "^8.11.0",
 		"bun-types": "^1.3.8",
 		"tsx": "^4.7.1",
 		"typescript": "^5.8.3"
