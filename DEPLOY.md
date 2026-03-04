@@ -32,7 +32,7 @@
 3. 选择你的仓库
 4. 在环境变量中添加：
    ```
-   DATABASE_URL=你的Supabase连接字符串
+   DATABASE_URL=postgresql://postgres:[hogjo5-wajRyq-guwkon]@db.iibmqjsphsacipllefra.supabase.co:5432/postgres
    OLLAMA_BASE_URL=http://localhost:11434  (本地测试用)
    ```
 5. 部署完成后，获取 Railway 提供的 URL（例如：`https://your-app.railway.app`）
@@ -90,7 +90,7 @@ cd apps/web && bun run dev
 
 ### 后端 (apps/api/.env)
 ```env
-DATABASE_URL=postgresql://...
+DATABASE_URL=postgresql://postgres:[hogjo5-wajRyq-guwkon]@db.iibmqjsphsacipllefra.supabase.co:5432/postgres
 GITHUB_APP_ID=...
 GITHUB_APP_PRIVATE_KEY=...
 GITHUB_APP_WEBHOOK_SECRET=...

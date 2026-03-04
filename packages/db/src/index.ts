@@ -3,6 +3,7 @@ import "dotenv/config";
 import { desc, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
+import { Client } from "pg";
 import * as schema from "./schema";
 
 // 读取 .env 文件中的 DATABASE_URL
