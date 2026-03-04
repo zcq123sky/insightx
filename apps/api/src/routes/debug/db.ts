@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { Client } from "pg";
+import { Client } from "isx/db";
 
 const app = new Hono();
 
