@@ -1,8 +1,8 @@
 <script lang="ts">
 import { getApiUrl } from "$lib/api";
 
-const prUrl = $state("");
-const githubToken = $state("");
+let prUrl = $state("");
+let githubToken = $state("");
 let loading = $state(false);
 let result = $state<any>(null);
 let error = $state("");
